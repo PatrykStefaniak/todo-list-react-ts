@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+.icon {
+    width: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.icon-pen {
+    content: url('../public/pen.svg');
+}
+
+.icon-trash-can {
+    content: url('../public/trash-can.svg');
+}
+
+.icon-plus {
+    content: url('../public/plus.svg');
+}
+
+.icon-pen-to-square {
+    content: url('../public/pen-to-square.svg');
+}
+
+.icon-check {
+    content: url('../public/check.svg');
+}

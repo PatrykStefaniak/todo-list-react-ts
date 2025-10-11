@@ -2,12 +2,20 @@
 
 type IconButtonProps = {
     icon: string,
-    buttonCls?: string
+    buttonCls?: string,
+    handler: () => void
 };
 
-export default function IconButton({icon, buttonCls = ''}: IconButtonProps) {
+export default function IconButton({icon, buttonCls = '', handler}: IconButtonProps) {
+    const onClick = () => {
+        handler();
+    };
+
     return (
-        <button className={buttonCls + ' rounded-2xl p-2 bg-white border-0 hover:bg-stone-100 cursor-pointer'}>
+        <button 
+            onClick={onClick}
+            className={buttonCls + ' rounded-2xl p-2 bg-white border-0 hover:bg-stone-100 cursor-pointer'}
+        >
             <div className={'w-50 icon ' + icon}></div>
         </button>
     );

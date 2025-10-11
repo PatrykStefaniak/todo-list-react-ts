@@ -3,7 +3,8 @@
 import React from "react";
 
 type IconInputProps = {
-    handler: Function
+    value: string
+    handler: (text: string) => void
 };
 
 export default function InputButton({handler}: IconInputProps) {

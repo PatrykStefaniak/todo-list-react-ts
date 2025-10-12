@@ -26,7 +26,10 @@ export default function Home() {
         <div className="flex justify-center">
             <table className="w-[340px]">
                 <tbody>
-                    <TodoItem value={"testing"} checked={false} />
+                    <TodoItem
+                        value={"testing"}
+                        checked={false}
+                    />
                 </tbody>
             </table>
         </div>

@@ -1,17 +1,11 @@
 'use client'
 
 import InputButton from "@/components/InputButton";
-import TodoItem from "@/components/TodoItem";
+import { TodoItem } from "@/types/todo";
 import { useState } from "react";
 
-type ItemModel = {
-    id: string
-    text: string
-    completed: boolean
-}
-
 export default function Home() {
-    const [items, setItems] = useState<ItemModel[]>([]);
+    const [items, setItems] = useState<TodoItem[]>([]);
 
     const onAddItem = (text: string) => {
         setItems((prevItems) => {
@@ -25,6 +19,14 @@ export default function Home() {
             ]
         });
     };
+
+    const onItemDelete = (id: string) => {
+
+    }
+
+    const onItemUpdate = (item: TodoItem) => {
+
+    }
 
     return <main className='flex flex-col bg-yellow-100 w-1/2 m-auto my-[60px] p-[50px] rounded-4xl text-center font-[system-ui] text-lg'>
         <div className="flex justify-center">
@@ -49,6 +51,8 @@ export default function Home() {
                                 key={item.id}
                                 value={item.text}
                                 checked={item.completed}
+                                onDelete={onItemDelete}
+                                onUpdate={onItemUpdate}
                             />;
                         })
                     }

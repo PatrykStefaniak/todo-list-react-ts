@@ -3,12 +3,12 @@
 type IconButtonProps = {
     icon: string,
     buttonCls?: string,
-    handler: () => void
+    handler: (e: any) => void
 };
 
 export default function IconButton({icon, buttonCls = '', handler}: IconButtonProps) {
-    const onClick = () => {
-        handler();
+    const onClick = (e: any) => {
+        handler(e);
     };
 
     return (

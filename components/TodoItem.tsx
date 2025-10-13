@@ -1,24 +1,28 @@
 'use client'
 
-import React from "react";
+import { useState, useRef } from "react";
 import IconButton from "./IconButton";
+import { TodoItem as TodoItemType } from "@/types/todo";
 
 type TodoItemProps = {
-    value: string,
+    value: string
     checked: boolean
+    onDelete: (id: string) => void
+    onUpdate: (item: TodoItemType) => void
 };
 
-export default function TodoItem({value, checked}: TodoItemProps) {
-    const [text, setText] = React.useState(value);
-    const [completed, setCompleted] = React.useState(checked);
-    const [isEditing, setIsEditing] = React.useState(false);
-    const inputEditRef = React.useRef<HTMLInputElement>(null);
+export default function TodoItem(props: TodoItemProps) {
+    const {value, checked, onDelete, onUpdate} = {...props};
+    const [text, setText] = useState(value);
+    const [completed, setCompleted] = useState(checked);
+    const [isEditing, setIsEditing] = useState(false);
+    const inputEditRef = useRef<HTMLInputElement>(null);
 
     const onCheckChange = () => {
         setCompleted(!completed);
     };
 
-    const onEdit = () => {
+    const onEdit = (e: any) => {
         if (isEditing) {
             setIsEditing(false);
             setText(inputEditRef.current?.value || '');
@@ -32,8 +36,8 @@ export default function TodoItem({value, checked}: TodoItemProps) {
         setText(e.target.value);
     };
 
-    const onDelete = () => {
-
+    const handleDelete = (e: any) => {
+        onDelete(e.target.key);
     };
 
     let textColumn;
@@ -72,7 +76,7 @@ export default function TodoItem({value, checked}: TodoItemProps) {
         </td>
         <td className="flex-1 m-auto">
             <IconButton
-                handler={onDelete}
+                handler={handleDelete}
                 icon="icon-trash-can"
             />
         </td>

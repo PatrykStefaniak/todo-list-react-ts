@@ -1,12 +1,29 @@
 'use client'
 
-import IconButton from "@/components/IconButton";
 import InputButton from "@/components/InputButton";
 import TodoItem from "@/components/TodoItem";
+import { useState } from "react";
+
+type ItemModel = {
+    id: string
+    text: string
+    completed: boolean
+}
 
 export default function Home() {
-    function onAddItem(text: string) {
-        
+    const [items, setItems] = useState<ItemModel[]>([]);
+
+    const onAddItem = (text: string) => {
+        setItems((prevItems) => {
+            return [
+                ...prevItems,
+                {
+                    id: crypto.randomUUID(),
+                    text: text,
+                    completed: false
+                }
+            ]
+        });
     };
 
     return <main className='flex flex-col bg-yellow-100 w-1/2 m-auto my-[60px] p-[50px] rounded-4xl text-center font-[system-ui] text-lg'>
@@ -23,13 +40,18 @@ export default function Home() {
         <div>
             <div></div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
             <table className="w-[340px]">
                 <tbody>
-                    <TodoItem
-                        value={"testing"}
-                        checked={false}
-                    />
+                    {
+                        items.map((item) => {
+                            return <TodoItem
+                                key={item.id}
+                                value={item.text}
+                                checked={item.completed}
+                            />;
+                        })
+                    }
                 </tbody>
             </table>
         </div>

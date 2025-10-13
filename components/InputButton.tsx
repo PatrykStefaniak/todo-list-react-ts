@@ -33,7 +33,7 @@ export default function InputButton(props: IconInputProps) {
             value={text}
             type="text"
             placeholder="Add your task"
-            className="bg-white rounded-l-xl p-2 border-0"
+            className="bg-white rounded-l-xl p-2 border-0 w-[170px]"
         />
         <button 
             onClick={onButtonClick}

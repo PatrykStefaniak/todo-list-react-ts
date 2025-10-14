@@ -3,23 +3,37 @@
 import InputButton from "@/components/InputButton";
 import TodoItem from "@/components/TodoItem";
 import { TodoItemModel } from "@/types/todo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Storage } from "@/lib/storage"
+
+const storage = new Storage('todolist-nextjsts');
 
 export default function Home() {
     const [addInputKey, setAddInputKey] = useState(0);
     const [items, setItems] = useState<TodoItemModel[]>([]);
+    const isFirstRender = useRef(true);
+
+    useEffect(() => {
+        setItems(storage.getObject('todo-items') || []);
+    }, []);
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        }
+
+        storage.setObject('todo-items', items);
+    }, [items]);
 
     const onAddItem = (text: string) => {
-        setItems((prevItems) => {
-            return [
-                ...prevItems,
-                {
-                    id: crypto.randomUUID(),
-                    text: text,
-                    completed: false
-                }
-            ]
-        });
+        setItems((prevItems) => [
+            ...prevItems,
+            {
+                id: crypto.randomUUID(),
+                text: text,
+                completed: false
+            }
+        ]);
 
         setAddInputKey((v) => v + 1);
     };

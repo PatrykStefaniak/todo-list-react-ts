@@ -1,11 +1,13 @@
 'use client'
 
 import InputButton from "@/components/InputButton";
-import { TodoItem } from "@/types/todo";
+import TodoItem from "@/components/TodoItem";
+import { TodoItemModel } from "@/types/todo";
 import { useState } from "react";
 
 export default function Home() {
-    const [items, setItems] = useState<TodoItem[]>([]);
+    const [addInputKey, setAddInputKey] = useState(0);
+    const [items, setItems] = useState<TodoItemModel[]>([]);
 
     const onAddItem = (text: string) => {
         setItems((prevItems) => {
@@ -18,13 +20,15 @@ export default function Home() {
                 }
             ]
         });
+
+        setAddInputKey((v) => v + 1);
     };
 
     const onItemDelete = (id: string) => {
 
     }
 
-    const onItemUpdate = (item: TodoItem) => {
+    const onItemUpdate = (item: TodoItemModel) => {
 
     }
 
@@ -36,7 +40,8 @@ export default function Home() {
         <div className="flex justify-center mt-10">
             <InputButton
                 handler={onAddItem}
-                value={""}
+                value={''}
+                key={addInputKey}
             />
         </div>
         <div>
@@ -49,6 +54,7 @@ export default function Home() {
                         items.map((item) => {
                             return <TodoItem
                                 key={item.id}
+                                id={item.id}
                                 value={item.text}
                                 checked={item.completed}
                                 onDelete={onItemDelete}

@@ -1,35 +1,26 @@
 'use client'
 
-import React from "react";
+import { useRef, useState } from "react";
 
 type IconInputProps = {
     value: string
     handler: (text: string) => void,
     buttonIcon?: string
-    focusInput?: boolean
 };
 
 export default function InputButton(props: IconInputProps) {
-    const {value, handler, buttonIcon, focusInput} = {...props};
-    const [text, setText] = React.useState(value);
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const {value, handler, buttonIcon} = props;
+    const [text, setText] = useState(value);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onButtonClick = () => {
         handler(text);
     }
 
-    const onInputChange = (e: any) => {
-        setText(e.target.value);
-    };
-
-    React.useEffect(() => {
-        focusInput && inputRef.current?.focus();
-    }, [focusInput]);
-
     return <div className="flex">
         <input
             ref={inputRef}
-            onChange={onInputChange}
+            onChange={(e) => setText(e.target.value)}
             value={text}
             type="text"
             placeholder="Add your task"

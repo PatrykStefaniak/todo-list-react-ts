@@ -2,17 +2,18 @@
 
 import { useState, useRef } from "react";
 import IconButton from "./IconButton";
-import { TodoItem as TodoItemType } from "@/types/todo";
+import { type TodoItemModel } from "@/types/todo";
 
 type TodoItemProps = {
+    id: string
     value: string
     checked: boolean
     onDelete: (id: string) => void
-    onUpdate: (item: TodoItemType) => void
+    onUpdate: (item: TodoItemModel) => void
 };
 
 export default function TodoItem(props: TodoItemProps) {
-    const {value, checked, onDelete, onUpdate} = {...props};
+    const {id, value, checked, onDelete, onUpdate} = props;
     const [text, setText] = useState(value);
     const [completed, setCompleted] = useState(checked);
     const [isEditing, setIsEditing] = useState(false);
@@ -20,12 +21,25 @@ export default function TodoItem(props: TodoItemProps) {
 
     const onCheckChange = () => {
         setCompleted(!completed);
+        onUpdate({
+            id: id,
+            completed: !completed,
+            text: text
+        });
     };
 
     const onEdit = (e: any) => {
         if (isEditing) {
+            const newValue = inputEditRef.current?.value || '';
+
             setIsEditing(false);
-            setText(inputEditRef.current?.value || '');
+            setText(newValue);
+
+            onUpdate({
+                id: id,
+                completed: completed,
+                text: newValue
+            });
         } else {
             setIsEditing(true);
             inputEditRef.current?.focus();

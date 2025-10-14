@@ -28,8 +28,10 @@ export default function Home() {
         setItems((items) => items.filter(item => item.id !== id));
     }
 
-    const onItemUpdate = (item: TodoItemModel) => {
-
+    const onItemUpdate = (editedItem: TodoItemModel) => {
+        setItems((items) => items.map(item => {
+            return item.id === editedItem.id ? editedItem : item
+        }));
     }
 
     return <main className='flex flex-col bg-yellow-100 w-1/2 m-auto my-[60px] p-[50px] rounded-4xl text-center font-[system-ui] text-lg'>

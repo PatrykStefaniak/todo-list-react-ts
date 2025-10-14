@@ -45,7 +45,6 @@ export default function TodoItem(props: TodoItemProps) {
             });
         } else {
             setIsEditing(true);
-            inputEditRef.current?.focus();
         }
     };
 
@@ -67,6 +66,8 @@ export default function TodoItem(props: TodoItemProps) {
     if (isEditing) {
         textColumn = <div>
             <input
+                autoFocus
+                className="bg-white rounded-l-xl p-2 border-0 w-1/1"
                 value={text}
                 onChange={onTextChange}
                 onClick={(e) => e.stopPropagation()}
@@ -74,9 +75,7 @@ export default function TodoItem(props: TodoItemProps) {
             />
         </div>
     } else {
-        textColumn = completed
-            ? <span className="line-through">{text}</span>
-            : text;
+        textColumn = <span className={"ml-2 " + (completed ? "line-through" : "")}>{text}</span>;
     }
 
     return <tr 
@@ -96,10 +95,14 @@ export default function TodoItem(props: TodoItemProps) {
             {textColumn}
         </td>
         <td className="flex-1 m-auto">
-            <IconButton
-                handler={onEdit}
-                icon={isEditing ? "icon-check" : "icon-pen"}
-            />
+            {
+                completed
+                    ? null
+                    : <IconButton
+                        handler={onEdit}
+                        icon={isEditing ? "icon-check" : "icon-pen"}
+                    />
+            }
         </td>
         <td className="flex-1 m-auto">
             <IconButton

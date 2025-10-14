@@ -48,7 +48,7 @@ export default function Home() {
         }));
     }
 
-    return <main className='flex flex-col bg-yellow-100 w-1/2 m-auto my-[60px] p-[50px] rounded-4xl text-center font-[system-ui] text-lg'>
+    return <main className='flex flex-col bg-yellow-100 w-1/2 m-auto my-[60px] p-[50px] rounded-4xl text-center font-[system-ui] text-lg box-content'>
         <div className="flex justify-center">
             <h1 className="text-3xl mr-[8px] font-bold">ToDo List</h1>
             <div className="icon icon-pen-to-square !w-[34px] !cursor-default"></div>

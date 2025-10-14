@@ -25,7 +25,7 @@ export default function Home() {
     };
 
     const onItemDelete = (id: string) => {
-
+        setItems((items) => items.filter(item => item.id !== id));
     }
 
     const onItemUpdate = (item: TodoItemModel) => {

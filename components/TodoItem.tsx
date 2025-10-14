@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent, MouseEvent } from "react";
 import IconButton from "./IconButton";
 import { type TodoItemModel } from "@/types/todo";
 
@@ -20,7 +20,8 @@ export default function TodoItem(props: TodoItemProps) {
     const inputEditRef = useRef<HTMLInputElement>(null);
 
     const onCheckChange = () => {
-        setCompleted(!completed);
+        setCompleted((v) => !v);
+
         onUpdate({
             id: id,
             completed: !completed,
@@ -28,7 +29,9 @@ export default function TodoItem(props: TodoItemProps) {
         });
     };
 
-    const onEdit = (e: any) => {
+    const onEdit = (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+
         if (isEditing) {
             const newValue = inputEditRef.current?.value || '';
 
@@ -46,12 +49,17 @@ export default function TodoItem(props: TodoItemProps) {
         }
     };
 
-    const onTextChange = (e: any) => {
+    const onTextChange = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
     };
 
-    const handleDelete = (e: any) => {
-        onDelete(e.target.key);
+    const handleDelete = (e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        onDelete(id);
+    };
+
+    const onRowClick = () => {
+        onCheckChange();
     };
 
     let textColumn;
@@ -61,20 +69,25 @@ export default function TodoItem(props: TodoItemProps) {
             <input
                 value={text}
                 onChange={onTextChange}
+                onClick={(e) => e.stopPropagation()}
                 ref={inputEditRef}
             />
         </div>
     } else {
-        textColumn = checked
-            ? <span className="line-through">text</span>
+        textColumn = completed
+            ? <span className="line-through">{text}</span>
             : text;
     }
 
-    return <tr className="group flex bg-white rounded-xl p-2 pl-6 mt-5 cursor-pointer h-15">
+    return <tr 
+            className="group flex bg-white rounded-xl p-2 pl-6 mt-5 cursor-pointer h-15"
+            onClick={onRowClick}
+        >
         <td className="flex-1 m-auto mr-3 min-w-[20px]">
             <input
-                checked={checked}
+                checked={completed}
                 onChange={onCheckChange}
+                onClick={(e) => e.stopPropagation()}
                 type="checkbox"
                 className="hidden group-hover:block scale-180 cursor-pointer"
             />
